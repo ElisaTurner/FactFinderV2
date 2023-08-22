@@ -4,7 +4,7 @@ Use this application to input and query facts.
 
 1. Install Elixir.
 2. Clone the repository:
-git clone [github link](https://github.com/ElisaTurner/FactFinder)
+git clone [github link](https://github.com/ElisaTurner/FactFinderV2)
 3. Navigate to the directory:
 4. cd fact_finder_application
 5. Run the following command to compile the code:
