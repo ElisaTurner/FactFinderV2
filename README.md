@@ -12,7 +12,6 @@ git clone [github link](https://github.com/ElisaTurner/FactFinder)
 6. Run the following command to start the server:
 iex -S mix
 7. You can now input facts and queries:
-iex
 - import FactFinder
 - import FactMap
 - FactFinder.input_fact("is_a_cat (lucy)")
