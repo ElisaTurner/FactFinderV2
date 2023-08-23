@@ -46,23 +46,23 @@ defmodule FactFinder do
     :ok
   end
 
-  def match_fact(statement) do
-    downcased_statement = String.downcase(String.trim(statement))
+  def match_fact(query_fact) do
+    [fact_type | placeholders] = String.split(query_fact, " ")
+    downcased_fact_type = String.downcase(fact_type)
     stored_facts = read_facts()
 
-    IO.puts("Query Fact (Input): #{downcased_statement}")
+    IO.puts("Query Fact (Input): #{downcased_fact_type} #{placeholders}")
 
-    case Enum.find(stored_facts, fn {fact_type, _} ->
-           String.downcase(fact_type) == String.downcase(downcased_statement)
-         end) do
-      {:ok, _} ->
-        IO.puts("---")
-        IO.puts(true)
+    matching_facts =
+      stored_facts
+      |> Enum.filter(fn {key, _} -> key == String.to_atom(downcased_fact_type) end)
 
-      :error ->
-        IO.puts("---")
-        IO.puts(false)
-    end
+    value_placeholder = List.first(placeholders)
+
+    match_found = Enum.any?(matching_facts, fn {_key, value} -> value == value_placeholder end)
+
+    IO.puts("---")
+    IO.puts(match_found)
 
     :ok
   end
@@ -92,17 +92,6 @@ defmodule FactFinder do
   end
 
   def delete_fact(statement) do
-    downcased_statement = String.downcase(String.trim(statement))
-    stored_facts = read_facts()
-
-    updated_facts =
-      stored_facts
-      # Reverse the list to iterate from most recent
-      |> Enum.reverse()
-      |> Enum.reject(fn {fact, _} -> fact == String.to_atom(downcased_statement) end)
-
-    write_facts(updated_facts)
-    IO.puts("Deleted Fact: #{downcased_statement}")
-    {:ok, updated_facts}
+    IO.puts("Deleted Fact should be here: #{statement} ")
   end
 end
